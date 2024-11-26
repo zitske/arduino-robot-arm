@@ -41,7 +41,6 @@ void setup() {
 }
 
 void loop() {
-    
     // Exemplo de uso da função cinemática
     float angles[5];
     calculateKinematics(10.0, 10.0, 10.0, angles);

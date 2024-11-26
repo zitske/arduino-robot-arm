@@ -3,7 +3,7 @@
 Este projeto é um braço robótico controlado por Arduino, equipado com uma garra e cinco servos. O objetivo é criar um braço robótico funcional que possa ser utilizado para diversas aplicações, como manipulação de objetos leves.
 
 ## Projeto Base
- DIY Arduino Robot Arm with Smartphone Control[https://www.youtube.com/watch?v=_B3gWd3A_SI]
+ [DIY Arduino Robot Arm with Smartphone Control](https://www.youtube.com/watch?v=_B3gWd3A_SI)
 
 
 ## Componentes

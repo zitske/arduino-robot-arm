@@ -5,7 +5,7 @@ const int numServos = 6;
 // Cria um array de servos
 Servo servos[numServos];
 // Define os pinos dos servos
-int servoPins[numServos] = {2, 3, 4, 5, 6, 7};
+int servoPins[numServos] = {8, 9, 10, 11, 12, 13};
 
 // Função cinemática que recebe coordenadas (x, y, z) e retorna 5 ângulos
 void calculateKinematics(float x, float y, float z, float angles[5]) {
@@ -34,17 +34,29 @@ void calculateKinematics(float x, float y, float z, float angles[5]) {
 }
 
 void setup() {
+  Serial.begin(115200);
     // Inicializa os servos
     for (int i = 0; i < numServos; i++) {
         servos[i].attach(servoPins[i]);
+        servos[i].write(90);
     }
+
 }
 
 void loop() {
     // Exemplo de uso da função cinemática
-    float angles[5];
-    calculateKinematics(10.0, 10.0, 10.0, angles);
-    for (int i = 0; i < 5; i++) {
-        Serial.println(angles[i]);
+    //float angles[5];
+    //calculateKinematics(10.0, 10.0, 10.0, angles);
+    //for (int i = 0; i < 5; i++) {
+    //    Serial.println(angles[i]);
+    //}
+    if(Serial.available()> 1){
+      int sread = Serial.parseInt();
+      Serial.println(sread);
+      for (int i = 0; i < 3; i++) {
+        servos[i].write(sread);
     }
+      
+    }
+    delay(5);
 }

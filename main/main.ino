@@ -5,13 +5,20 @@ const int numServos = 6;
 // Cria um array de servos
 Servo servos[numServos];
 // Define os pinos dos servos
-int servoPins[numServos] = {2, 3, 4, 5, 6, 7};
+int servoPins[numServos] = {8, 9, 10, 11, 12, 13};
 
+// Define os pontos
+float pointsX[4] = {10.0,15.0,20.0,15.0};
+float pointsY[4] = {15.0,15.0,18.0,15.0};
+float pointsZ[4] = {10.0,15.0,13.0,15.0};
+int points_num = 4;
+// Define o intervalo entre ponto
+int interval = 3000;
 // Função cinemática que recebe coordenadas (x, y, z) e retorna 5 ângulos
 void calculateKinematics(float x, float y, float z, float angles[5]) {
     // Implementação da cinemática inversa
-    float L1 = 10.0; // Comprimento do primeiro segmento
-    float L2 = 10.0; // Comprimento do segundo segmento
+    float L1 = 12.0; // Comprimento do primeiro segmento
+    float L2 = 15.0; // Comprimento do segundo segmento
 
     // Ângulo da base
     angles[0] = atan2(y, x) * 180 / PI;
@@ -29,22 +36,29 @@ void calculateKinematics(float x, float y, float z, float angles[5]) {
     angles[1] = (theta1 + theta2) * 180 / PI;
 
     // Ângulo do pulso e garra (ajustar conforme necessário)
-    angles[3] = 0; // Ângulo pulso
-    angles[4] = 0; // Ângulo garra
+    angles[3] = 90; // Ângulo pulso
+    angles[4] = 90; // Ângulo garra
 }
 
 void setup() {
+  Serial.begin(115200);
     // Inicializa os servos
     for (int i = 0; i < numServos; i++) {
         servos[i].attach(servoPins[i]);
+        servos[i].write(90);
     }
+
 }
 
 void loop() {
-    // Exemplo de uso da função cinemática
     float angles[5];
-    calculateKinematics(10.0, 10.0, 10.0, angles);
-    for (int i = 0; i < 5; i++) {
-        Serial.println(angles[i]);
+    for(int i = 0; i < points_num; i++) {
+        calculateKinematics(pointsX[i], pointsY[i], pointsZ[i], angles);
+        Serial.println("-------------------");
+        for (int j = 0; j < numServos; j++) {
+          Serial.println(angles[j]);
+            servos[j].write(angles[j]);
+        }
+        delay(interval);
     }
 }
